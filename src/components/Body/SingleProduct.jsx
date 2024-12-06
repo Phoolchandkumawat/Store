@@ -41,7 +41,7 @@ function SingleProduct() {
                     <div className='p-5 flex flex-col'>
                         <div className="flex">
                             <span>Price: {product.price}</span>
-                            <div className={`${product.discount ? "flex gap-3":"hidden"} `}>
+                            <div className={`${product.discount ? "flex gap-3":"hidden"} ml-2`}>
                                 <span>{product.price - Math.floor(product.price/product.discount)}</span>
                                 <span className='bg-red-500 p-2 rounded-full w-5 h-5'>{product.discount}</span>
                             </div>
