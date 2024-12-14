@@ -25,7 +25,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='product/:id' element={<SingleProduct/>}/>
     <Route path='product/cart' element={<Cart/>}/>
     <Route path='/:id' element = {<Skalaton/>}/>
-    <Route path='/product/payment' element = {<Payment/>}/>
+    <Route path='/product/payment/:productid' element = {<Payment/>}/>
   </Route>
 ))
 

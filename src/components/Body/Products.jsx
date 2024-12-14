@@ -56,11 +56,7 @@ function Products() {
               return <button className={`w-max px-3 py-2 ${selectedcategory ==index ? "bg-slate-500":'bg-slate-300'} rounded-xl`} key={index} onClick={()=> setSelectedCategory(index)}>{buttons}</button>
             })
           }
-            {/* <button className='w-max px-3 py-2 bg-slate-300 rounded-xl '>All</button>
-            <button className='w-max px-3 py-2 bg-slate-300 rounded-xl '>Popular</button>
-            <button className='w-max px-3 py-2 bg-slate-300 rounded-xl '>Cheap</button>
-            <button className='w-max px-3 py-2 bg-slate-300 rounded-xl '>Expensiv</button>
-            <button className='w-max px-3 py-2 bg-slate-300 rounded-xl '>Sale</button> */}
+            
         </div>
 
         <div className={`products ${loader ? "hidden" :"grid"} grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:grid-cols-2 mt-5 w-[95%] m-auto`}>

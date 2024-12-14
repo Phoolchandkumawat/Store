@@ -1,12 +1,21 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import {useNavigate} from 'react-router-dom'
+import { getproductCart } from '../../Store/Slice/StoreSlice'
+
 
 function InnerCart({
     imagesUrl,
     productName,
     productPrice,
     productQuantity,
+    productId,
+})
 
-}) {
+{
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
   return (
     <div className="items h-40 border-2 p-2 rounded-md">
                 <div className="card-items gap-2 flex h-full items-center justify-center">
@@ -25,7 +34,7 @@ function InnerCart({
                         <span className='border-r-2 border-gray-700'>{productPrice}</span>
                         <span className='border-r-2 border-gray-700'>{productQuantity}</span>
                         <div className="">
-                            <button className='bg-red-500 px-5 hover:bg-red-700 py-1 rounded-md'>Buy</button>
+                            <button onClick={(e)=>{e.preventDefault(); navigate(`/product/payment/${productId}`); dispatch(getproductCart(productId))}} className='bg-red-500 px-5 hover:bg-red-700 py-1 rounded-md'>Buy</button>
                         </div>
                     </div>
                     </div>
