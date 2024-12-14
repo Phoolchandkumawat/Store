@@ -6,9 +6,10 @@ import { createSlice , nanoid } from "@reduxjs/toolkit";
 
 const initialValue = {
     data : [
-        {id:"2", productName: 'products', price:"price", quantity:'2', productColor:"white", productImageUrl:"images"}
+        {id:"2", productName: 'products', price:"52", quantity:'2', productColor:"white", productImageUrl:"images"}
     ],
-    notification: [{id: '2', text:"Added To Cart", seen:"false"},{id: '2d', text:"Added To Store Cart", seen:"false"}]
+    notification: [{id: '2', text:"Added To Cart", seen:"false"},{id: '2d', text:"Added To Store Cart", seen:"false"}],
+    currentItem: [{id:"d"}],
 }
 
 const storeSlice = createSlice({
@@ -40,14 +41,18 @@ const storeSlice = createSlice({
             state.notification.filter((notification)=>{
                 return notification.id !== action.payload.id
             })
-        }
+        },
+        getproductCart: (state, action)=>{
+             const product = state.data.map((data)=> data.id === action.payload ? data : "not Found")
+             state.currentItem = product 
+         }
     },
 })
 
 
 
 
-export const {addToCart, addNotification, updateNotification} = storeSlice.actions
+export const {addToCart, addNotification, updateNotification, getproductCart} = storeSlice.actions
 
 
 export default storeSlice.reducer

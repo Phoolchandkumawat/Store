@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 function Page1(
     {currentPage,
     setcurrentPage,
-}) {
+}){
+    const {productid} = useParams()
+    const currentProduct = useSelector(state=> state.currentItem[0])
+
+    useState(()=>{
+       
+        console.log(currentProduct)
+    },[productid])
+
   return (
     <div className={`${currentPage === 0 ? 'grid': 'hidden'}`}>
             <div className="product-d">
@@ -17,10 +27,10 @@ function Page1(
                             <th >Total</th>
                         </tr>
                         <tr className='w-full border-x-[1px] border-b-[1px] border-black grid grid-cols-4'>
-                            <th className='border-r-[1px] border-black'>Sony</th>
-                            <th className='border-r-[1px] border-black'>2</th>
-                            <th className='border-r-[1px] border-black'>777</th>
-                            <th >Total</th>
+                            <th className='border-r-[1px] border-black'>{currentProduct.productName || "sony"}</th>
+                            <th className='border-r-[1px] border-black'>{currentProduct.quantity || "3"}</th>
+                            <th className='border-r-[1px] border-black'>{currentProduct.price || "333"}</th>
+                            <th >{currentProduct.price * currentProduct.quantity || "Total"}</th>
                         </tr>
                     </table>
                 </div>
