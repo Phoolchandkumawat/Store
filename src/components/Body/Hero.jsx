@@ -12,7 +12,7 @@ function Hero() {
         <div className="main w-full">
           <div className="ml-auto w-full md:w-[calc(100%-20%)]">
             {/* <HotSale/> */}
-            <Products type = "moblie"/>
+            <Products/>
           </div>
         </div>
     </div>
