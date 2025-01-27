@@ -5,11 +5,10 @@ import { createSlice , nanoid } from "@reduxjs/toolkit";
 
 
 const initialValue = {
-    data : [
-        {id:"2", productName: 'products', price:"52", quantity:'2', productColor:"white", productImageUrl:"images"}
-    ],
-    notification: [{id: '2', text:"Added To Cart", seen:"false"},{id: '2d', text:"Added To Store Cart", seen:"false"}],
-    currentItem: [{id:"d"}],
+    data : [],
+    notification: [],
+    currentItem: [],
+    user:[],
 }
 
 const storeSlice = createSlice({
@@ -45,6 +44,9 @@ const storeSlice = createSlice({
         getproductCart: (state, action)=>{
              const product = state.data.map((data)=> data.id === action.payload ? data : "not Found")
              state.currentItem = product 
+         },
+         setUser: (state, action)=>{
+            state.user = action.payload
          }
     },
 })
@@ -52,7 +54,7 @@ const storeSlice = createSlice({
 
 
 
-export const {addToCart, addNotification, updateNotification, getproductCart} = storeSlice.actions
+export const {addToCart, addNotification, updateNotification, getproductCart, setUser} = storeSlice.actions
 
 
 export default storeSlice.reducer

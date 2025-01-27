@@ -16,6 +16,7 @@ function InnerCart({
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
   return (
     <div className="items h-40 border-2 p-2 rounded-md">
                 <div className="card-items gap-2 flex h-full items-center justify-center">

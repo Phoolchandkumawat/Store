@@ -6,8 +6,7 @@ import { fa7, faBell, faCartShopping, faHome, faLineChart, faList, faListAlt, fa
 import Login from '../Body/Login';
 import Signup from '../Body/Signup';
 import { useEffect } from 'react';
-import Notification from '../popnotification/Notification';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function Navbar() {
@@ -20,7 +19,7 @@ function Navbar() {
   const [isuser, setIsuser] = useState([])
   const [toggle, setToggle] = useState(2)
   const notification = useSelector(state => state.notification)
-  const dispatch = useDispatch()
+  const cardlength = useSelector(state => state.data)
   const navigate = useNavigate()
   let timeoutId; 
   const searchData = (e) => {
@@ -71,14 +70,30 @@ function Navbar() {
       navigate('/product/cart')
     }
   }
+  
+  const handleOutsideClick = (event) => {
+    if (!event.target.closest('.searche')) {
+      if (!event.target.closest('.iconso')) {
+        setShownotification(false)
+        
+      }
+    }
+  };
+  
 
   useEffect(()=>{
     window.addEventListener('resize',()=>{
-      console.log(window.innerWidth)
       if(window.innerWidth >640){
         setToggle(2)
       }
     })
+    
+    
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+
   },[])
 
 
@@ -90,7 +105,7 @@ function Navbar() {
         <div className="bg-white border-2 shadow-2xl h-full w-full  ">
           <div className="icons flex items-center justify-between w-4/5 m-auto h-full text-2xl">
             {[faList,faMagnifyingGlass,faHome,faCartShopping,faUser].map((icons,index)=>{
-              return <FontAwesomeIcon icon={icons} onClick={()=> toToggle(index)} className={`${toggle==index ? "relative bottom-3 bg-black text-white" :"hover:border-black border-[1px]"}  p-2 rounded-full h-7 w-7 cursor-pointer `}/>
+              return <FontAwesomeIcon key={index} icon={icons} onClick={()=> toToggle(index)} className={`${toggle==index ? "relative bottom-3 bg-black text-white" :"hover:border-black border-[1px]"}  p-2 rounded-full h-7 w-7 cursor-pointer `}/>
             })}
           </div>
         </div>
@@ -111,7 +126,7 @@ function Navbar() {
               </div>
             </div>
       </div>
-        <Notification/>
+        
         <div className={`justify-between items-center w-4/5 m-auto h-full ${toggle == 1 ? "hidden": "flex"}`}>
             <div className="logo w-1/4 text-red-500">Web Store</div>
             <div className="search w-2/4 h-full items-center justify-center hidden md:flex relative">
@@ -131,9 +146,9 @@ function Navbar() {
             <div className='icons flex justify-between md:w-3/6 lg:w-2/6 xl:w-1/4 ml-5'>
                   <div className="icons hidden gap-5 text-[20px] md:flex">
                     <div className='relative'>
-                      <FontAwesomeIcon onClick={()=> setShownotification(!shownotification)} icon={faBell} className='cursor-pointer hover:text-red-500 relative'/>
+                      <FontAwesomeIcon onClick={()=> setShownotification(!shownotification)} icon={faBell} className='cursor-pointer hover:text-red-500 relative searche'/>
                       <span className= {`${notification.length>0 ? "flex": 'hidden'} px-1 w-2 h-2 bg-gray-400 rounded-full absolute top-0 -right-1 text-[12px]`}></span>
-                      <ul className={`${shownotification ? 'grid grid-cols-1': 'hidden'} p-2 absolute gap-2 top-10 rounded-md right-0 w-64 max-h-80 h-max bg-white border-2 shadow-2xl`}>
+                      <ul className={`${shownotification ? 'grid grid-cols-1': 'hidden'} p-2 absolute gap-2 top-10 rounded-md right-0 w-64 max-h-80 h-max bg-white border-2 shadow-2xl iconso`}>
                         {notification && notification.map((notification)=>{
                           return <li key={notification.id} className='bg-gray-400 text-white h-max p-1 rounded-md text-[16px]'>{notification.text}</li>
                         })}
@@ -142,13 +157,12 @@ function Navbar() {
                     </div>
                     <div className='relative'>
                       <FontAwesomeIcon onClick={(e)=> {e.preventDefault(); return navigate(`/product/cart`) }} icon={faCartShopping} className='cursor-pointer hover:text-red-500 relative'/>
-                      <span className='px-1 h-2 w-2 bg-red-400 rounded-full absolute top-0 -right-1 text-[12px]'></span>
+                      <span className={`px-1 h-2 w-2 bg-red-400 rounded-full absolute top-0 -right-1 text-[12px] ${cardlength.length>0 ? "flex": 'hidden'}`}></span>
                     </div>
                   </div>
-                      {/* <div className="fle x md:hidden cursor-pointer" onClick={()=>{setToggleMenu(!togglemenu)}}>Menu</div> */}
                     <div className={`${isuser.length !== 0 ? "hidden":"flex"} flex gap-5`}>
                       <button onClick={()=>setlogactive(!logactive)} className='bg-gray-400 py-1 px-2 hover:bg-gray-500 rounded-lg'>Log in</button>
-                      <button className='bg-gray-400 py-1 px-2 hover:bg-gray-500 rounded-lg'>Sing up</button>
+                      <button className='bg-gray-400 py-1 px-2 hover:bg-gray-500 rounded-lg'>Sign up</button>
                     </div>
                     <div className= {`${isuser.length !== 0 ? "flex":"hidden"} items-center justify-center gap-2`}>
                         <div className="img-profile w-8 h-8 rounded-full bg-green-300"></div>
@@ -157,7 +171,6 @@ function Navbar() {
             </div>
                     <Login  senduser ={setIsuser} isactive={logactive} setisactive = {setlogactive}/>
         </div>
-        {/* <MediaNavbar istoggle={togglemenu}/> */}
     </nav>
 
   )

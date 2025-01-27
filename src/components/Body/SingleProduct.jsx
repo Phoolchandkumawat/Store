@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import AddCart from './AddCart'
+// import Notification from '../popnotification/Notification'
+import { useSelector } from 'react-redux'
 
 function SingleProduct() {
     const [product, setProduct] = useState([])
     const {id} = useParams()
     const navigate = useNavigate()
     const [showCart, setShowCart] = useState(false)
+    const userdata = useSelector(state => state.user)
     useEffect(() => {
         async function getProduct(ids){
             const api = `https://fakestoreapi.in/api/products/${ids}`
             try {
                 const res = await fetch(api)
                 const data = await res.json()
-                // console.log(data)
                 setProduct(data.product)
             } catch (error) {
                 
@@ -21,9 +23,9 @@ function SingleProduct() {
         }
 
         getProduct(id)
-        
-      console.log("")
+    
     }, [id])
+
     
   return (
     <>
@@ -41,10 +43,10 @@ function SingleProduct() {
                     <h2 className='border-t-2 w-2/3'>{product.title}</h2>
                     <div className='p-5 flex flex-col gap-2'>
                         <div className="flex">
-                            <span className=''>Price: <span className={`${product.discount ? "ml-10 text-gray-500 text-[14px]": "ml-2"} relative`}>{product.price}</span></span>
-                            <div className={`${product.discount ? "flex gap-2":"hidden"} relative -left-16 gap-10 `}>
-                                <span className='ml-2'>{product.price - Math.floor(product.price/product.discount)}</span>
-                                <span className='bg-red-500 rounded-full w-7 h-7 flex items-center justify-center text-[12px] relative -top-3'>{product.discount}%</span>
+                            <span className=''>Price:<span className={`${product.discount ? " text-gray-500 text-[14px] left-11": "ml-0"} relative`}>${product.price}</span></span>
+                            <div className={`${product.discount ? "flex gap-14 relative -left-9":"hidden"} `}>
+                                <span className='ml-2'>${product.price - Math.floor(product.price/product.discount)}</span>
+                                <span className='bg-red-500 rounded-full w-7 h-7 items-center justify-center flex'>{product.discount}%</span>
                             </div>
                         </div>
                         <span>Brand: {product.brand}</span>
@@ -56,8 +58,9 @@ function SingleProduct() {
                         </p>
                         
                     </div>
-                    <div className="button">
-                        <button onClick={() => setShowCart(true)} type='button' className='bg-red-500 p-2 text-white rounded-md'>Add To Cart</button>
+                    <div className='flex items-center gap-5' >
+                        <button disabled={userdata.address ? false : true} onClick={() => setShowCart(true)} type='button' className='bg-red-500 p-2 text-white rounded-md'>Add To Cart</button>
+                        <span className={`${userdata.address ? 'hidden' : 'flex underline text-gray-700'}`}>Login To Add To Card</span>
                     </div>
                 </div>
             </div>
@@ -72,5 +75,4 @@ function SingleProduct() {
     </>
   )
 }
-
 export default SingleProduct

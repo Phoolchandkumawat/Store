@@ -11,16 +11,14 @@ function ProductCard({
 
   const navigate = useNavigate()
   const toProduct = (e)=>{
-    console.log(e)
     navigate(`/product/${e}`)
-    setShowSearch(false)
   }
 
   return (
     <div onClick={()=>toProduct(productid)} className="border-2 sm:h-[40dvw] h-[50dvw] md:h-[35dvw] xl:h-[20dvw] lg:h-[25dvw] overflow-hidden p-2 cursor-pointer">
         <div className="w-full h-full sm:place-content-center sm:place-items-center sm:flex sm:flex-col flex flex-row">
             <div className="w-2/4 h-1/2">
-                    <img src={images} className='object-contain aspect-[0.9] hover:scale-110' alt={name} />
+                    <img src={images} loading='lazy' className='object-contain aspect-[0.9] hover:scale-110' alt={name} />
             </div>
             <div className="text h-1/2 pt-5">
                 <div className='w-full h-12 overflow-hidden text-ellipsis border-b-2'>{name}</div>
